@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseServerAnon } from "@/lib/supabaseAdmin";
+import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { hashPassword, isFourDigitPassword } from "@/lib/password";
 
 export const runtime = "nodejs";
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     const passwordHash = await hashPassword(body.password);
-    const supabase = getSupabaseServerAnon();
+    const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("memos")
       .insert({ title, content, password_hash: passwordHash })

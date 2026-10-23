@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE, createAdminSessionToken } from "@/lib/adminSession";
+import {
+  ADMIN_COOKIE,
+  ADMIN_SESSION_MAX_AGE,
+  createAdminSessionToken,
+} from "@/lib/adminSession";
 import { verifyPassword } from "@/lib/password";
 
 export const runtime = "nodejs";
@@ -30,7 +34,7 @@ export async function POST(request: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 8,
+      maxAge: ADMIN_SESSION_MAX_AGE,
     });
     return response;
   } catch (error) {
